@@ -24,7 +24,13 @@ This service provider must be registered.
     Larva\Credit\CreditServiceProvider::class,
 ];
 ```
-
+## 数据表
+```php
+Schema::table('users', function (Blueprint $table) {
+    $table->unsignedInteger('credit')->default(0)->nullable()->after('balance');
+    $table->unsignedInteger('level_credit')->default(0)->nullable()->after('credit');
+});
+```
 
 
 
