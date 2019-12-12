@@ -1,0 +1,29 @@
+{
+  "name": "larva/laravel-credit",
+  "description": "This is a credit.",
+  "keywords": [ "laravel", "credit", "larva" ],
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "ext-bcmath": "*",
+    "illuminate/support": "^5.1 || ^6.0",
+    "illuminate/notifications": "^5.1 || ^6.0",
+    "larva/laravel-transaction": "^1.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Larva\\Credit\\": "src"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    },
+    "laravel": {
+      "providers": [
+        "Larva\\Credit\\CreditServiceProvider"
+      ]
+    }
+  },
+  "prefer-stable": true
+}
