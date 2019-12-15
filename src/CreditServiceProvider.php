@@ -33,11 +33,6 @@ class CreditServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../resources/lang' => resource_path('lang/vendor/credit'),
             ], 'credit-resources');
-
-            $this->publishes([
-                dirname(__DIR__) . '/config/credit.php' => config_path('credit.php'),],
-                'credit-config'
-            );
         }
 
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'credit');

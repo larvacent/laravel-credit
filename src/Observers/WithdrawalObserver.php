@@ -36,7 +36,7 @@ class WithdrawalObserver
         ]);
 
         //根据汇率计算可得到现金额 单位元
-        $amount = bcdiv($withdrawal->credit, config('credit.withdrawals_cny_exchange_rate', 10),2);
+        $amount = bcdiv($withdrawal->credit, config('services.credit.withdrawals_cny_exchange_rate', 10),2);
 
         $withdrawal->transfer()->create([
             'amount' => bcmul($amount, 100),

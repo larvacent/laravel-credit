@@ -126,7 +126,7 @@ class Recharge extends Model
     public function setSucceeded()
     {
         $this->update(['channel' => $this->charge->channel, 'type' => $this->charge->type, 'status' => static::STATUS_SUCCEEDED, 'succeeded_at' => $this->freshTimestamp()]);
-        $credit = bcdiv($this->amount, config('credit.cny_exchange_rate', 10));
+        $credit = bcdiv($this->amount, config('services.credit.cny_exchange_rate', 10));
 
         $this->transaction()->create([
             'user_id' => $this->user_id,
@@ -136,8 +136,8 @@ class Recharge extends Model
             'current_credit' => bcadd($this->user->credit, $credit)
         ]);
 
-        if ($credit >= config('credit.recharge_gift_mix', 1000000)) {//赠送
-            $gift = bcmul(config('credit.recharge_gift', 0), $credit);
+        if ($credit >= config('services.credit.recharge_gift_mix', 1000000)) {//赠送
+            $gift = bcmul(config('services.credit.recharge_gift', 0), $credit);
             if ($gift > 0) {
                 $this->bonus()->create(['user_id' => $this->user_id, 'credit' => $gift, 'description' => trans('credit::credit.recharge_gift')]);
             }

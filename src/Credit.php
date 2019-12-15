@@ -98,7 +98,7 @@ class Credit
      */
     public function withdrawal($user, $credit, $channel, $recipient, $metaData = [])
     {
-        if ($credit < config('credit.withdrawals_mix', 100)) {//提现金额小于最小提现金额不合法
+        if ($credit < config('services.credit.withdrawals_mix', 100)) {//提现金额小于最小提现金额不合法
             return false;
         }
         $currentCredit = bcsub($user->credit, $credit);
