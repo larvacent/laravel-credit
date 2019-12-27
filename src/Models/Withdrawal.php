@@ -21,6 +21,7 @@ use Larva\Transaction\Models\Transfer;
  * @property int $credit
  * @property string $status
  * @property string $channel
+ * @property string $client_ip
  * @property string $recipient
  * @property array $metadata
  * @property-read array $extra
@@ -54,7 +55,7 @@ class Withdrawal extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'credit', 'status', 'channel', 'recipient', 'metadata', 'canceled_at', 'succeeded_at'
+        'user_id', 'credit', 'status', 'channel', 'recipient', 'client_ip', 'metadata', 'canceled_at', 'succeeded_at'
     ];
 
     /**

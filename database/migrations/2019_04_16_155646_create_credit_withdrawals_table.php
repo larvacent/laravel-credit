@@ -20,6 +20,7 @@ class CreateCreditWithdrawalsTable extends Migration
             $table->string('status', 10)->default('created');
             $table->string('channel', 30);
             $table->string('recipient');
+            $table->ipAddress('client_ip')->nullable();//发起支付请求客户端的 IP 地址
             $table->text('metadata')->nullable();
             $table->timestamps();
             $table->timestamp('canceled_at', 0)->nullable();//成功时间

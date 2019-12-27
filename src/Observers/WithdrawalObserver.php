@@ -32,7 +32,8 @@ class WithdrawalObserver
             'type' => Transaction::TYPE_WITHDRAWAL,
             'description' => trans('credit::credit.withdrawal'),
             'credit' => $credit,
-            'current_credit' => bcadd($withdrawal->user->credit, $credit)
+            'current_credit' => bcadd($withdrawal->user->credit, $credit),
+            'client_ip' => $withdrawal->client_ip,
         ]);
 
         //根据汇率计算可得到现金额 单位元
