@@ -94,9 +94,10 @@ class Credit
      * @param string $channel
      * @param string $recipient 收款账户
      * @param array $metaData 附加信息
+     * @param string $clientIP 客户端IP
      * @return Withdrawal|false
      */
-    public function withdrawal($user, $credit, $channel, $recipient, $metaData = [])
+    public function withdrawal($user, $credit, $channel, $recipient, $metaData = [], $clientIP = null)
     {
         if ($credit < config('services.credit.withdrawals_mix', 100)) {//提现金额小于最小提现金额不合法
             return false;
@@ -111,7 +112,8 @@ class Credit
             'channel' => $channel,
             'status' => Withdrawal::STATUS_PENDING,
             'recipient' => $recipient,
-            'metadata' => $metaData
+            'metadata' => $metaData,
+            'client_ip' => $clientIP,
         ]);
     }
 
