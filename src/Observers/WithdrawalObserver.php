@@ -30,21 +30,22 @@ class WithdrawalObserver
         $withdrawal->transaction()->create([
             'user_id' => $withdrawal->user_id,
             'type' => Transaction::TYPE_WITHDRAWAL,
-            'description' => '积分提现',
+            'description' => trans('credit::credit.withdrawal'),
             'credit' => $credit,
             'current_credit' => bcadd($withdrawal->user->credit, $credit)
         ]);
 
         //根据汇率计算可得到现金额 单位元
-        $amount = bcdiv($withdrawal->credit, config('services.credit.withdrawals_cny_exchange_rate', 10),2);
+        $amount = bcdiv($withdrawal->credit, config('services.credit.withdrawals_cny_exchange_rate', 10), 2);
 
         $withdrawal->transfer()->create([
             'amount' => bcmul($amount, 100),
             'currency' => 'CNY',
-            'description' => '积分提现',
+            'description' => trans('credit::credit.withdrawal'),
             'channel' => $withdrawal->channel,
             'metadata' => $withdrawal->metadata,
-            'recipient_id' => $withdrawal->recipient
+            'recipient_id' => $withdrawal->recipient,
+            'extra' => $withdrawal->extra
         ]);
     }
 }

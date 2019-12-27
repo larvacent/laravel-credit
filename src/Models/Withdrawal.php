@@ -23,8 +23,10 @@ use Larva\Transaction\Models\Transfer;
  * @property string $channel
  * @property string $recipient
  * @property array $metadata
+ * @property-read array $extra
  * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $succeeded_at
+ * @property \Illuminate\Support\Carbon|null $canceled_at
+ * @property \Illuminate\Support\Carbon|null $succeeded_at
  *
  * @property User $user
  * @property Transaction $transaction
@@ -86,6 +88,22 @@ class Withdrawal extends Model
     ];
 
     /**
+     * 获取提现附加参数
+     * @return array
+     */
+    public function getExtraAttribute()
+    {
+        return [
+            //微信
+            'type' => $this->metadata['type'] ?? '',
+            'user_name' => $this->metadata['name'] ?? '',
+            //支付宝
+            'recipient_name' => $this->metadata['name'] ?? '',
+            'recipient_account_type' => $this->metadata['account_type'] ?? ''
+        ];
+    }
+
+    /**
      * 设置提现成功
      */
     public function setSucceeded()
@@ -102,8 +120,8 @@ class Withdrawal extends Model
     {
         $this->transaction()->create([
             'user_id' => $this->user_id,
-            'type' => Transaction::TYPE__WITHDRAWAL_REVOKED,
-            'description' => '积分提现撤销',
+            'type' => Transaction::TYPE_WITHDRAWAL_REVOKED,
+            'description' => trans('credit::credit.withdrawal_revoked'),
             'credit' => $this->credit,
             'current_credit' => bcadd($this->user->credit, $this->credit)
         ]);
@@ -120,8 +138,8 @@ class Withdrawal extends Model
     {
         $this->transaction()->create([
             'user_id' => $this->user_id,
-            'type' => Transaction::TYPE__WITHDRAWAL_FAILED,
-            'description' => '积分提现失败',
+            'type' => Transaction::TYPE_WITHDRAWAL_FAILED,
+            'description' => trans('credit::credit.withdrawal_failed'),
             'credit' => $this->credit,
             'current_credit' => bcadd($this->user->credit, $this->credit)
         ]);

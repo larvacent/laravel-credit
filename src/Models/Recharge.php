@@ -24,8 +24,8 @@ use Larva\Transaction\Models\Charge;
  * @property string $status
  * @property string $client_ip
  * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
- * @property \Illuminate\Support\Carbon $succeeded_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $succeeded_at
  *
  * @property Charge $charge
  * @property User $user
